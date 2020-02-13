@@ -9,7 +9,7 @@ public class TestCycDouble : MonoBehaviour {
     private Button Prebtn;
     private Button NextBtn;
     private Node<int> node;
-
+    private CircleLink<int> circlelink;
     void Start ()
 	{
 	    Prebtn = transform.Find("Previous").GetComponent<Button>();
@@ -17,7 +17,7 @@ public class TestCycDouble : MonoBehaviour {
 	    Prebtn.onClick.AddListener(OnPrebtnListen);
 	    NextBtn.onClick.AddListener(NextBtnListen);
 
-	    CircleLink<int> circlelink = new CircleLink<int>();
+	    circlelink = new CircleLink<int>();
 	    for (int i = 0; i < 10; i++)
 	    {
 	        circlelink.AddElem(i*2);
@@ -29,12 +29,17 @@ public class TestCycDouble : MonoBehaviour {
     public void OnPrebtnListen()
     {
         node = node.PreNode;
-        Debug.Log("" + node.Data);
+        Debug.Log("" + node.Data); 
     }
     public void NextBtnListen()
     {
         node = node.NextNode;
         Debug.Log("" + node.Data);
+    }
+
+    public void RemoveNode()
+    {
+        circlelink.RemoveNode(node);
     }
 
     // Update is called once per frame
