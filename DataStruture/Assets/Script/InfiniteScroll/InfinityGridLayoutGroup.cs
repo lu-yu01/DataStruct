@@ -182,7 +182,7 @@ public class InfinityGridLayoutGroup : MonoBehaviour
         if (gridLayoutGroup.constraint == GridLayoutGroup.Constraint.FixedColumnCount)
         {
             float offsetY = currentPos.y - startPosition.y;
-
+            //Debug.Log("offsetY:" + offsetY);
             if (offsetY > 0)
             {
                 //向上拉，向下扩展;
@@ -194,10 +194,10 @@ public class InfinityGridLayoutGroup : MonoBehaviour
                     }
 
                     float scrollRectUp = scrollRect.transform.TransformPoint(Vector3.zero).y;
-
+                    //Debug.LogFormat("children[0].anchoredPosition.y:{0}  gridLayoutGroup.cellSize.y:{1}", children[0].anchoredPosition.y, gridLayoutGroup.cellSize.y);
                     Vector3 childBottomLeft = new Vector3(children[0].anchoredPosition.x, children[0].anchoredPosition.y - gridLayoutGroup.cellSize.y, 0f);
                     float childBottom = transform.TransformPoint(childBottomLeft).y;
-
+                    Debug.LogFormat("childBottom:{0}   scrollRectUp:{1}  children[0].name:{2}  children[0].anchoredPosition.y:{3}", childBottom, scrollRectUp, children[0].name, children[0].anchoredPosition.y);
                     if (childBottom >= scrollRectUp)
                     {
                         //Debug.Log("childBottom >= scrollRectUp");
@@ -205,10 +205,11 @@ public class InfinityGridLayoutGroup : MonoBehaviour
                         //移动到底部;
                         for (int index = 0; index < gridLayoutGroup.constraintCount; index++)
                         {
+                            Debug.Log("SetAsLastSibling");
                             children[index].SetAsLastSibling();
-
+                            Debug.LogFormat("children[children.Count - 1].anchoredPosition.y==" + children[children.Count - 1].anchoredPosition.y);
                             children[index].anchoredPosition = new Vector2(children[index].anchoredPosition.x, children[children.Count - 1].anchoredPosition.y - gridLayoutGroup.cellSize.y - gridLayoutGroup.spacing.y);
-
+                            Debug.LogFormat("child[index].name:{0}  children[index].anchoredPosition:{1}", children[index].name, children[index].anchoredPosition);
                             realIndex++;
 
                             if (realIndex > amount - 1)
@@ -278,110 +279,6 @@ public class InfinityGridLayoutGroup : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            float offsetX = currentPos.x - startPosition.x;
-
-            if (offsetX < 0)
-            {
-                //向左拉，向右扩展;
-                {
-                    if (realIndex >= amount - 1)
-                    {
-                        startPosition = currentPos;
-                        return;
-                    }
-
-                    float scrollRectLeft = scrollRect.transform.TransformPoint(Vector3.zero).x;
-
-                    Vector3 childBottomRight = new Vector3(children[0].anchoredPosition.x+ gridLayoutGroup.cellSize.x, children[0].anchoredPosition.y, 0f);
-                    float childRight = transform.TransformPoint(childBottomRight).x;
-
-                   // Debug.LogError("childRight=" + childRight);
-
-                    if (childRight <= scrollRectLeft)
-                    {
-                        //Debug.Log("childRight <= scrollRectLeft");
-
-                        //移动到右边;
-                        for (int index = 0; index < gridLayoutGroup.constraintCount; index++)
-                        {
-                            children[index].SetAsLastSibling();
-
-                            children[index].anchoredPosition = new Vector2(children[children.Count - 1].anchoredPosition.x + gridLayoutGroup.cellSize.x + gridLayoutGroup.spacing.x, children[index].anchoredPosition.y);
-
-                            realIndex++;
-
-                            if (realIndex > amount - 1)
-                            {
-                                children[index].gameObject.SetActive(false);
-                            }
-                            else
-                            {
-                                UpdateChildrenCallback(realIndex, children[index]);
-                            }
-                        }
-
-                        //GridLayoutGroup 右侧加长;
-                        rectTransform.sizeDelta += new Vector2(gridLayoutGroup.cellSize.x + gridLayoutGroup.spacing.x,0);
-
-                        //更新child;
-                        for (int index = 0; index < children.Count; index++)
-                        {
-                            children[index] = transform.GetChild(index).GetComponent<RectTransform>();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                //Debug.Log("Drag Down");
-                //向右拉，右边收缩;
-                if (realIndex + 1 <= children.Count)
-                {
-                    startPosition = currentPos;
-                    return;
-                }
-                RectTransform scrollRectTransform = scrollRect.GetComponent<RectTransform>();
-                Vector3 scrollRectAnchorRight = new Vector3(scrollRectTransform.rect.width + gridLayoutGroup.spacing.x, 0, 0f);
-                float scrollRectRight = scrollRect.transform.TransformPoint(scrollRectAnchorRight).x;
-
-                Vector3 childUpLeft = new Vector3(children[children.Count - 1].anchoredPosition.x, children[children.Count - 1].anchoredPosition.y, 0f);
-
-                float childLeft = transform.TransformPoint(childUpLeft).x;
-
-                if (childLeft >= scrollRectRight)
-                {
-                    //Debug.LogError("childLeft > scrollRectRight");
-
-                    //把右边的一行 移动到左边;
-                    for (int index = 0; index < gridLayoutGroup.constraintCount; index++)
-                    {
-                        children[children.Count - 1 - index].SetAsFirstSibling();
-
-                        children[children.Count - 1 - index].anchoredPosition = new Vector2(children[0].anchoredPosition.x - gridLayoutGroup.cellSize.x - gridLayoutGroup.spacing.x,children[children.Count - 1 - index].anchoredPosition.y);
-
-                        children[children.Count - 1 - index].gameObject.SetActive(true);
-
-                        UpdateChildrenCallback(realIndex - children.Count - index, children[children.Count - 1 - index]);
-                    }
-
-                    
-
-                    //GridLayoutGroup 右侧缩短;
-                    rectTransform.sizeDelta -= new Vector2(gridLayoutGroup.cellSize.x + gridLayoutGroup.spacing.x, 0);
-
-                    //更新child;
-                    for (int index = 0; index < children.Count; index++)
-                    {
-                        children[index] = transform.GetChild(index).GetComponent<RectTransform>();
-                    }
-
-                    realIndex -= gridLayoutGroup.constraintCount;
-                }
-            }
-        }
-
         startPosition = currentPos;
     }
 
