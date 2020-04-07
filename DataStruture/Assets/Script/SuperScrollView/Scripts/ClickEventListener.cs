@@ -31,6 +31,7 @@ namespace SuperScrollView
         {
             if (eventData.clickCount == 2)
             {
+                Debug.Log("mDoubleClickedHandler");
                 if (mDoubleClickedHandler != null)
                 {
                     mDoubleClickedHandler(gameObject);
@@ -40,6 +41,7 @@ namespace SuperScrollView
             {
                 if (mClickedHandler != null)
                 {
+                    Debug.Log("mClickedHandler");
                     mClickedHandler(gameObject);
                 }
             }
@@ -47,27 +49,32 @@ namespace SuperScrollView
         }
         public void SetClickEventHandler(System.Action<GameObject> handler)
         {
+            Debug.Log("SetClickEventHandler");
             mClickedHandler = handler;
         }
 
         public void SetDoubleClickEventHandler(System.Action<GameObject> handler)
         {
+            Debug.Log("SetDoubleClickEventHandler");
             mDoubleClickedHandler = handler;
         }
 
         public void SetPointerDownHandler(System.Action<GameObject> handler)
         {
+            Debug.Log("SetPointerDownHandler");
             mOnPointerDownHandler = handler;
         }
 
         public void SetPointerUpHandler(System.Action<GameObject> handler)
         {
+            Debug.Log("SetPointerUpHandler");
             mOnPointerUpHandler = handler;
         }
 
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            Debug.Log("OnPointerDown");
             mIsPressed = true;
             if (mOnPointerDownHandler != null)
             {
@@ -77,6 +84,7 @@ namespace SuperScrollView
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            Debug.Log("OnPointerUp");
             mIsPressed = false;
             if (mOnPointerUpHandler != null)
             {

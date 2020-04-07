@@ -30,6 +30,7 @@ namespace SuperScrollView
 
         void OnStarClicked(int index)
         {
+            Debug.LogFormat("name:{0}  index:{1}", transform.name, index);
             ItemData data = DataSourceMgr.Get.GetItemDataByIndex(mItemDataIndex);
             if(data == null)
             {
