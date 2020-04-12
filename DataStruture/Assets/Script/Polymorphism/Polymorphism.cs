@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class Animal
 {
-    int age;
+    public int age;
     public Animal(int _age)
     {
         age = _age;
@@ -20,12 +20,12 @@ public class Animal
 
     public void Eat()
     {
-        Debug.Log("Animal Eat!");
+        Debug.Log("Animal Eat!" + age);
     }
 
     public virtual void Birth()
     {
-        Debug.Log("Animal Birth!");
+        Debug.Log("Animal Birth!" + age);
     }
 
     public virtual void Move()
@@ -59,16 +59,18 @@ public class Sheep : Mammal
     public Sheep(int _age) : base(_age)
     {
         Debug.Log("Construct Sheep!");
+        age = _age;
     }
 
     public new void Eat()
     {
-        Debug.Log("Sheep Eat!");
+       
+        Debug.Log("Sheep Eat!" + age);
     }
 
     public override void Birth()
     {
-        Debug.Log("Sheep Birth!");
+        Debug.Log("Sheep Birth!" + age);
     }
 
     public new void Move()
@@ -76,6 +78,21 @@ public class Sheep : Mammal
         Debug.Log("Sheep Move!");
     }
 
+}
+
+
+public class Monkey : Animal
+{
+
+    public Monkey(int _age) : base(_age)
+    {
+        age = _age;
+    }
+    public override void Birth()
+    {
+       // base.Birth();
+        Debug.Log("Monkey Birth!" + age);
+    }
 }
 
 
@@ -87,19 +104,17 @@ public class Polymorphism : MonoBehaviour {
         //  Sheep sheep = new Sheep();
           Animal animal = new Sheep(1);
         //  sheep.Eat();
-          animal.Eat();
+      //    animal.Eat();
         //  animal.Birth();
-
-      //  Animal animal = new Animal(1);
-      //  Animal animal1 = new Mammal(1);
-     //   Animal animal2 = new Sheep(1);
-     //   Sheep sheep = new Sheep(1);
-
         animal.Birth();
-     //   animal1.Move();
-     //   animal2.Move();
-     //   sheep.Move();
+        //   animal1.Move();
+        //   animal2.Move();
+        //   sheep.Move();
 
-	}
+        Animal monky = new Monkey(100);
+        monky.Birth();
+
+
+    }
 	
 }
