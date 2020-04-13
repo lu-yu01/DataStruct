@@ -788,7 +788,8 @@ namespace SuperScrollView
             }
 
             RecycleAllItem();
-            LoopListViewItem2 newItem = GetNewItemByIndex(itemIndex);
+             Debug.LogError("int first:" + itemIndex);
+            LoopListViewItem2 newItem = GetNewItemByIndex(itemIndex);//int first GetNewItemByIndex 
             if (newItem == null)
             {
                 ClearAllTmpRecycledItem();
@@ -1151,8 +1152,9 @@ namespace SuperScrollView
             mPointerEventData.pointerCurrentRaycast = eventData.pointerCurrentRaycast;
         }
 
-        LoopListViewItem2 GetNewItemByIndex(int index)
+        LoopListViewItem2 GetNewItemByIndex(int index) // todo gaojia
         {
+           // Debug.Log("GetNewItemByIndex:" + index);
             if(mSupportScrollBar && index < 0)
             {
                 return null;
@@ -1161,6 +1163,7 @@ namespace SuperScrollView
             {
                 return null;
             }
+            Debug.LogError("index:" + index.ToString());
             LoopListViewItem2 newItem = mOnGetItemByIndex(this, index);
             if (newItem == null)
             {
@@ -2002,22 +2005,26 @@ namespace SuperScrollView
             mListUpdateCheckFrameCount++;
             if (mIsVertList)
             {
+                
                 bool needContinueCheck = true;
                 int checkCount = 0;
                 int maxCount = 9999;
                 while (needContinueCheck)
                 {
+                   
                     checkCount++;
-                    if(checkCount >= maxCount)
+                   if (checkCount >= maxCount)
                     {
                         Debug.LogError("UpdateListView Vertical while loop " + checkCount + " times! something is wrong!");
                         break;
                     }
+                  //  Debug.LogErrorFormat("checkCount:{0}  maxCount:{1}", checkCount, maxCount);
                     needContinueCheck = UpdateForVertList(distanceForRecycle0, distanceForRecycle1, distanceForNew0, distanceForNew1);
                 }
             }
             else
             {
+                Debug.Log("needContinueCheck");
                 bool needContinueCheck = true;
                 int checkCount = 0;
                 int maxCount = 9999;
@@ -2036,7 +2043,14 @@ namespace SuperScrollView
         }
 
 
-
+        /// <summary>
+        /// 竖向ListUpdate
+        /// </summary>
+        /// <param name="distanceForRecycle0"></param>
+        /// <param name="distanceForRecycle1"></param>
+        /// <param name="distanceForNew0"></param>
+        /// <param name="distanceForNew1"></param>
+        /// <returns></returns>
         bool UpdateForVertList(float distanceForRecycle0,float distanceForRecycle1,float distanceForNew0, float distanceForNew1)
         {
             if (mItemTotalCount == 0)
@@ -2047,12 +2061,14 @@ namespace SuperScrollView
                 }
                 return false;
             }
-            if (mArrangeType == ListItemArrangeType.TopToBottom)
+            if (mArrangeType == ListItemArrangeType.TopToBottom)//上到下
             {
                 int itemListCount = mItemList.Count;
+              //  Debug.Log("itemListCount:" + itemListCount);
                 if (itemListCount == 0)
                 {
                     float curY = mContainerTrans.anchoredPosition3D.y;
+                    Debug.Log("curY:" + curY);
                     if (curY < 0)
                     {
                         curY = 0;
@@ -2064,7 +2080,8 @@ namespace SuperScrollView
                         GetPlusItemIndexAndPosAtGivenPos(curY, ref index, ref pos);
                         pos = -pos;
                     }
-                    LoopListViewItem2 newItem = GetNewItemByIndex(index);
+                    //Debug.LogError("GetNewItemByIndex:" + index);
+                    LoopListViewItem2 newItem = GetNewItemByIndex(index);// GetNewItemCallback
                     if (newItem == null)
                     {
                         return false;
@@ -2125,7 +2142,8 @@ namespace SuperScrollView
                     int nIndex = tViewItem1.ItemIndex + 1;
                     if (nIndex <= mCurReadyMaxItemIndex || mNeedCheckNextMaxItem)
                     {
-                        LoopListViewItem2 newItem = GetNewItemByIndex(nIndex);
+                        Debug.LogError("nindex:" + nIndex);
+                        LoopListViewItem2 newItem = GetNewItemByIndex(nIndex);// init scroll view
                         if (newItem == null)
                         {
                             mCurReadyMaxItemIndex = tViewItem1.ItemIndex;

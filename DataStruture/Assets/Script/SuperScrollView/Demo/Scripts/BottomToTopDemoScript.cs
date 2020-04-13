@@ -42,6 +42,7 @@ namespace SuperScrollView
 
         LoopListViewItem2 OnGetItemByIndex(LoopListView2 listView, int index)
         {
+           // Debug.LogError("index" + index);
             if (index < 0 || index >= DataSourceMgr.Get.TotalItemCount)
             {
                 return null;
