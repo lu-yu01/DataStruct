@@ -1099,6 +1099,7 @@ namespace SuperScrollView
 
         public virtual void OnBeginDrag(PointerEventData eventData)
         {
+            //Debug.Log("OnBeginDrag");
             if (eventData.button != PointerEventData.InputButton.Left)
             {
                 return;
@@ -1114,6 +1115,7 @@ namespace SuperScrollView
 
         public virtual void OnEndDrag(PointerEventData eventData)
         {
+            //Debug.Log("OnEndDrag");
             if (eventData.button != PointerEventData.InputButton.Left)
             {
                 return;
@@ -1129,6 +1131,7 @@ namespace SuperScrollView
 
         public virtual void OnDrag(PointerEventData eventData)
         {
+            //Debug.Log("OnDrag");
             if (eventData.button != PointerEventData.InputButton.Left)
             {
                 return;
@@ -1372,6 +1375,7 @@ namespace SuperScrollView
             }
             if(mNeedAdjustVec)
             {
+                Debug.Log("mNeedAdjustVec");
                 mNeedAdjustVec = false;
                 if(mIsVertList)
                 {
@@ -1394,6 +1398,7 @@ namespace SuperScrollView
                 mItemPosMgr.Update(false);
             }
             UpdateSnapMove();
+            //Debug.LogFormat("0:{0}  1:{1}  2:{2}  3:{3}", mDistanceForRecycle0, mDistanceForRecycle1, mDistanceForNew0, mDistanceForNew1);
             UpdateListView(mDistanceForRecycle0, mDistanceForRecycle1, mDistanceForNew0, mDistanceForNew1);
             ClearAllTmpRecycledItem();
             mLastFrameContainerPos = mContainerTrans.anchoredPosition3D;
@@ -1923,6 +1928,7 @@ namespace SuperScrollView
             }
             if (mScrollBarClickEventListener != null)
             {
+                Debug.Log("mScrollBarClickEventListener");
                 if (mScrollBarClickEventListener.IsPressd)
                 {
                     return false;
@@ -2175,6 +2181,7 @@ namespace SuperScrollView
 
                 if (topPos0.y - mViewPortRectLocalCorners[1].y < distanceForNew0)
                 {
+                   
                     if(tViewItem0.ItemIndex < mCurReadyMinItemIndex)
                     {
                         mCurReadyMinItemIndex = tViewItem0.ItemIndex;
@@ -2214,7 +2221,7 @@ namespace SuperScrollView
             }
             else
             {
-                
+                Debug.LogError("11111111111111111");
                 if (mItemList.Count == 0)
                 {
                     float curY = mContainerTrans.anchoredPosition3D.y;

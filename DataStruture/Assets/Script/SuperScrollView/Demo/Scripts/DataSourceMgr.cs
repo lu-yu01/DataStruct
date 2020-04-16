@@ -153,6 +153,7 @@ namespace SuperScrollView
                 tData.mIsExpand = false;
                 mItemDataList.Add(tData);
             }
+
         }
 
         void DoLoadMoreDataSource()
