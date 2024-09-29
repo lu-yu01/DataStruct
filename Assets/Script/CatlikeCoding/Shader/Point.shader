@@ -8,7 +8,7 @@ Shader "Graph/Point"
     {
         // No culling or depth
         Cull Off
-        
+
 
         Pass
         {
@@ -31,21 +31,21 @@ Shader "Graph/Point"
                 float3 worldPos : TEXCOORD1;
             };
 
-            v2f vert (appdata v)
+            v2f vert(appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.worldPos = mul(unity_ObjectToWorld ,v.vertex);
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 o.uv = v.uv;
                 return o;
             }
 
             sampler2D _MainTex;
 
-            fixed4 frag (v2f i) : SV_Target
+            fixed4 frag(v2f i) : SV_Target
             {
-                fixed4 col = fixed4(1,1,1,1);
-                col.rgb = i.worldPos;
+                fixed4 col = fixed4(0, 0, 0, 1);
+                col.rg = i.worldPos.xy * 0.5 + 0.5;;
                 return col;
             }
             ENDCG
