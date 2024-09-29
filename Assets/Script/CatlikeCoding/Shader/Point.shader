@@ -45,7 +45,7 @@ Shader "Graph/Point"
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 col = fixed4(0, 0, 0, 1);
-                col.rg = i.worldPos.xy * 0.5 + 0.5;;
+                col.rg = saturate(i.worldPos.xy * 0.5 + 0.5);;
                 return col;
             }
             ENDCG
