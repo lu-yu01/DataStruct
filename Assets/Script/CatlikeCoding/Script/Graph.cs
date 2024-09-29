@@ -8,6 +8,7 @@ public class Graph : MonoBehaviour
 
     Transform[] points;
     private float step = 0;
+
     void Start()
     {
         step = 2f / resolution;
@@ -21,8 +22,6 @@ public class Graph : MonoBehaviour
             point.localScale = scale;
             point.SetParent(transform);
         }
-
-     
     }
 
     private void Update()
@@ -33,7 +32,7 @@ public class Graph : MonoBehaviour
             Transform point = points[i];
             Vector3 position = point.localPosition;
             position.x = (i + 0.5f) * step - 1f;
-            position.y = Mathf.Sin(Mathf.PI * (position.x + time));
+            position.y = FunctionLibrary.MultiWave(position.x, time);
             point.localPosition = position;
         }
     }

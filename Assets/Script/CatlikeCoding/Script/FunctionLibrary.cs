@@ -11,7 +11,7 @@ public static class FunctionLibrary
     public static float MultiWave(float x, float t)
     {
         float y = Sin(PI * (x + t));
-        y += Sin(2f * PI * (x + t)) / 2f;
-        return y/1.5f;
+        y += Sin(2f * PI * (x + t)) * 0.5f;
+        return y / (2f / 3f);
     }
 }
